@@ -1,0 +1,254 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>SIH Alert System</title>
+  <link href="https://cdn.jsdelivr.net/npm/remixicon/fonts/remixicon.css" rel="stylesheet">
+  <style>
+    body {
+      font-family: "Poppins", sans-serif;
+      margin: 0;
+      background: #121212;
+      color: #eaeaea;
+    }
+
+    header {
+      background: linear-gradient(90deg, #ff1e56, #ffac41);
+      color: white;
+      padding: 18px;
+      text-align: center;
+      font-size: 24px;
+      font-weight: bold;
+      letter-spacing: 1px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      gap: 10px;
+      box-shadow: 0 4px 15px rgba(0,0,0,0.4);
+    }
+
+    .container {
+      width: 90%;
+      max-width: 1100px;
+      margin: 25px auto;
+    }
+
+    /* Tabs (now square buttons) */
+    .tabs {
+      display: flex;
+      justify-content: center;
+      margin-bottom: 20px;
+      gap: 10px;
+    }
+
+    .tab {
+      padding: 10px 18px;
+      border-radius: 6px;
+      border: none;
+      cursor: pointer;
+      background: #1f1f1f;
+      color: #bbb;
+      font-weight: 500;
+      transition: all 0.3s ease;
+      box-shadow: 0 2px 5px rgba(0,0,0,0.5);
+    }
+
+    .tab.active {
+      background: #ff1e56;
+      color: white;
+      transform: translateY(-2px);
+      box-shadow: 0 4px 10px rgba(0,0,0,0.6);
+    }
+
+    /* Alerts */
+    .alert-card {
+      background: #1e1e1e;
+      border-radius: 8px;
+      padding: 18px;
+      margin-bottom: 15px;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.6);
+      border-left: 6px solid;
+      animation: fadeIn 0.6s ease;
+      position: relative;
+    }
+
+    .alert-card h3 {
+      margin: 0 0 8px;
+      font-size: 18px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      color: #fff;
+    }
+
+    .alert-card p {
+      margin: 0;
+      font-size: 14px;
+      color: #ccc;
+    }
+
+    /* Severity badges */
+    .badge {
+      font-size: 12px;
+      padding: 3px 8px;
+      border-radius: 4px;
+      font-weight: bold;
+      text-transform: uppercase;
+      margin-left: auto;
+    }
+    .badge-info { background: #17a2b8; color: #fff; }
+    .badge-warning { background: #ffc107; color: #111; }
+    .badge-critical { background: #dc3545; color: #fff; }
+
+    /* Actions */
+    .alert-actions {
+      margin-top: 12px;
+      display: flex;
+      gap: 10px;
+    }
+
+    .btn {
+      padding: 6px 12px;
+      border: none;
+      border-radius: 6px;
+      font-size: 13px;
+      cursor: pointer;
+      transition: 0.3s;
+    }
+
+    .btn-resolve { background: #28a745; color: white; }
+    .btn-resolve:hover { background: #218838; }
+    .btn-ack { background: #007bff; color: white; }
+    .btn-ack:hover { background: #0056b3; }
+
+    .alert-info { border-left-color: #17a2b8; }
+    .alert-warning { border-left-color: #ffc107; }
+    .alert-critical { 
+      border-left-color: #dc3545; 
+      animation: glow 1s infinite alternate;
+    }
+
+    /* Toast */
+    .toast {
+      visibility: hidden;
+      min-width: 260px;
+      margin-left: -130px;
+      background-color: #222;
+      color: #fff;
+      text-align: center;
+      border-radius: 6px;
+      padding: 14px;
+      position: fixed;
+      z-index: 1;
+      left: 50%;
+      bottom: 35px;
+      font-size: 14px;
+      opacity: 0;
+      transition: visibility 0s, opacity 0.5s ease;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.5);
+    }
+
+    .toast.show {
+      visibility: visible;
+      opacity: 1;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(20px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    @keyframes glow {
+      from { box-shadow: 0 0 10px rgba(220,53,69,0.3); }
+      to { box-shadow: 0 0 20px rgba(220,53,69,0.9); }
+    }
+  </style>
+</head>
+<body>
+
+  <header><i class="ri-alarm-warning-fill"></i> Smart Alert System</header>
+
+  <div class="container">
+    <!-- Tabs -->
+    <div class="tabs">
+      <button class="tab active" data-type="all">All</button>
+      <button class="tab" data-type="info">Info</button>
+      <button class="tab" data-type="warning">Warning</button>
+      <button class="tab" data-type="critical">Critical</button>
+    </div>
+
+    <!-- Alerts -->
+    <div id="alertsContainer"></div>
+  </div>
+
+  <!-- Toast -->
+  <div id="toast"></div>
+
+  <script>
+    const alertsContainer = document.getElementById('alertsContainer');
+    const tabs = document.querySelectorAll('.tab');
+    const toast = document.getElementById('toast');
+
+    let alerts = [
+      { type: 'info', title: 'Routine Fire Drill', desc: 'Fire drill scheduled at 11:00 AM today.' },
+      { type: 'warning', title: 'Heavy Rainfall Alert', desc: 'Expected thunderstorms in the evening.' },
+      { type: 'critical', title: 'Gas Leak Reported', desc: 'Evacuate Block B immediately!' }
+    ];
+
+    function renderAlerts(filter = 'all') {
+      alertsContainer.innerHTML = '';
+      alerts
+        .filter(alert => filter === 'all' || alert.type === filter)
+        .forEach(alert => {
+          const card = document.createElement('div');
+          card.className = `alert-card alert-${alert.type}`;
+          card.innerHTML = `
+            <h3><i class="ri-error-warning-fill"></i> ${alert.title} 
+              <span class="badge badge-${alert.type}">${alert.type}</span>
+            </h3>
+            <p>${alert.desc}</p>
+            <div class="alert-actions">
+              <button class="btn btn-resolve">Resolve</button>
+              <button class="btn btn-ack">Acknowledge</button>
+            </div>
+          `;
+          alertsContainer.prepend(card);
+        });
+    }
+
+    function showToast(message) {
+      toast.textContent = message;
+      toast.className = "toast show";
+      setTimeout(() => { toast.className = "toast"; }, 3000);
+    }
+
+    function addAutoAlert() {
+      const newAlert = {
+        type: ['info','warning','critical'][Math.floor(Math.random()*3)],
+        title: 'Auto Alert ' + (alerts.length + 1),
+        desc: 'This is a simulated real-time alert.'
+      };
+      alerts.push(newAlert);
+      showToast(`🔔 ${newAlert.title} received!`);
+      renderAlerts(document.querySelector('.tab.active').dataset.type);
+    }
+
+    // Tabs filter
+    tabs.forEach(tab => {
+      tab.addEventListener('click', () => {
+        document.querySelector('.tab.active').classList.remove('active');
+        tab.classList.add('active');
+        renderAlerts(tab.dataset.type);
+      });
+    });
+
+    // Initial render
+    renderAlerts();
+
+    // Auto alerts every 20 sec
+    setInterval(addAutoAlert, 20000);
+  </script>
+
+</body>
+</html>

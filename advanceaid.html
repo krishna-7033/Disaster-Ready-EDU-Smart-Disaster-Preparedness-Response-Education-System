@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Advanced First Aid Training - DisasterReady EDU</title>
+  <style>
+    /* Reuse existing CSS variables and styles for consistency */
+    :root {
+      --primary: #1e40af;
+      --success: #059669;
+      --danger: #b91c1c;
+      --light: #ffffff;
+      --muted: #64748b;
+      --focus: #ffbf00;
+      --max-width: 1400px;
+    }
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, sans-serif;
+      background: linear-gradient(135deg, #6b7280 0%, #374151 100%);
+      color: var(--primary);
+      margin: 0; padding: 1rem;
+      min-height: 100vh;
+    }
+    .container {
+      max-width: var(--max-width);
+      margin: 0 auto;
+      background: var(--light);
+      padding: 2rem;
+      border-radius: 18px;
+      box-shadow: 0 14px 40px rgba(2,6,23,0.1);
+    }
+    h1, h2, h3 {
+      color: var(--primary);
+    }
+    p {
+      color: var(--muted);
+      line-height: 1.5;
+    }
+    .progress-bar {
+      background: #f3f4f6;
+      height: 12px;
+      border-radius: 999px;
+      overflow: hidden;
+      margin: 1rem 0;
+    }
+    .progress-fill {
+      height: 100%;
+      background: linear-gradient(90deg, var(--success), #34d399);
+      width: 40%; /* reflecting 40% progress */
+      transition: width 1.4s ease;
+    }
+    .training-section {
+      margin-top: 2rem;
+    }
+    .links {
+      margin-top: 2rem;
+    }
+    .links a {
+      text-decoration: none;
+      padding: 0.75rem 1.2rem;
+      margin-right: 1rem;
+      background: var(--primary);
+      color: var(--light);
+      border-radius: 12px;
+      font-weight: 600;
+      transition: background 0.3s ease;
+      display: inline-block;
+    }
+    .links a:hover,
+    .links a:focus {
+      background: var(--success);
+      outline: none;
+    }
+    @media (prefers-color-scheme: dark) {
+      body {
+        background: #1a202c;
+        color: #e2e8f0;
+      }
+      .container {
+        background: #2d3748;
+        color: #e2e8f0;
+        box-shadow: 0 14px 40px rgba(0,0,0,0.7);
+      }
+      h1, h2, h3 {
+        color: #63b3ed;
+      }
+      p {
+        color: #a0aec0;
+      }
+      .progress-bar {
+        background: #4a5568;
+      }
+      .progress-fill {
+        background: linear-gradient(90deg, #34d399, #059669);
+      }
+      .links a {
+        background: #63b3ed;
+        color: #1a202c;
+      }
+      .links a:hover,
+      .links a:focus {
+        background: #38a169;
+        color: white;
+      }
+    }
+  </style>
+</head>
+<body>
+  <main class="container" role="main" aria-labelledby="main-title">
+    <h1 id="main-title">Advanced First Aid Training</h1>
+    <p>Comprehensive first aid training including CPR certification, wound care, and emergency medical response skills essential for crisis situations.</p>
+
+    <section class="training-section" aria-labelledby="cpr-title">
+      <h2 id="cpr-title">CPR Basics</h2>
+      <p>Learn the critical steps of CPR: 30 chest compressions followed by 2 rescue breaths. Push hard and fast at a rhythm of 100-120 compressions per minute to maximize survival chances in cardiac emergencies.</p>
+    </section>
+
+    <section class="training-section" aria-labelledby="wound-care-title">
+      <h2 id="wound-care-title">Wound Care and Bleeding Control</h2>
+      <p>Master bleeding control techniques including applying direct pressure, elevating wounds if possible, and the proper use of tourniquets only in life-threatening scenarios.</p>
+    </section>
+
+    <section class="training-section" aria-labelledby="emergency-response-title">
+      <h2 id="emergency-response-title">Emergency Medical Response</h2>
+      <p>Understand when and how to call emergency services, provide clear location and symptom details, and protocols to assist victims until professional help arrives.</p>
+    </section>
+
+    <div class="progress-bar" aria-label="Course progress">
+      <div class="progress-fill" role="progressbar" aria-valuenow="40" aria-valuemin="0" aria-valuemax="100" style="width: 40%;"></div>
+    </div>
+    <p>Course Completion Progress: <strong>40%</strong></p>
+
+    <div class="links">
+      <a href="leadership.html" aria-label="Go to Crisis Leadership Course">Next Course: Crisis Leadership</a>
+      <a href="main.html" aria-label="Back to Home">Back to Home</a>
+    </div>
+  </main>
+</body>
+</html>

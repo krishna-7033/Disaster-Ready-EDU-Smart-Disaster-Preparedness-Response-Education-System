@@ -1,0 +1,292 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>First Aid Guide - DisasterReady EDU</title>
+  <style>
+    body {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background: #f3f4f6;
+      margin: 0;
+      padding: 0;
+      color: #1e293b;
+    }
+
+    /* Navbar */
+    nav {
+      background: #2563eb;
+      padding: 1rem 2rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+      position: sticky;
+      top: 0;
+      z-index: 1000;
+    }
+
+    nav .logo {
+      font-size: 1.2rem;
+      font-weight: bold;
+      color: #fff;
+    }
+
+    nav a {
+      margin: 0 1rem;
+      text-decoration: none;
+      color: #e5e7eb;
+      font-weight: 500;
+      transition: 0.3s;
+    }
+
+    nav a:hover, nav a.active {
+      color: #fff;
+      border-bottom: 2px solid #10b981;
+      padding-bottom: 0.2rem;
+    }
+
+    /* Hero */
+    .hero {
+      background: linear-gradient(135deg, #2563eb, #10b981);
+      color: white;
+      padding: 3rem 2rem;
+      text-align: center;
+    }
+
+    .hero h1 {
+      font-size: 2.5rem;
+      margin-bottom: 1rem;
+    }
+
+    .hero p {
+      font-size: 1.1rem;
+      max-width: 700px;
+      margin: 0 auto;
+    }
+
+    /* Container */
+    .container {
+      max-width: 1100px;
+      margin: 2rem auto;
+      padding: 0 2rem;
+    }
+
+    /* Accordion */
+    .accordion {
+      background: #fff;
+      border-radius: 10px;
+      margin-bottom: 1rem;
+      box-shadow: 0 5px 15px rgba(0,0,0,0.05);
+      overflow: hidden;
+      transition: 0.3s;
+    }
+
+    .accordion-header {
+      padding: 1rem 1.5rem;
+      cursor: pointer;
+      font-weight: bold;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      color: #2563eb;
+    }
+
+    .accordion-header:hover {
+      background: #f9fafb;
+    }
+
+    .accordion-content {
+      max-height: 0;
+      overflow: hidden;
+      transition: max-height 0.4s ease;
+      padding: 0 1.5rem;
+    }
+
+    .accordion-content ul {
+      margin: 1rem 0;
+      padding-left: 1.2rem;
+    }
+
+    .accordion-content li {
+      margin: 0.5rem 0;
+    }
+
+    .accordion.active .accordion-content {
+      max-height: 600px;
+      padding-bottom: 1rem;
+    }
+
+    /* Precautions Box */
+    .precautions {
+      background: #fff3cd;
+      border-left: 5px solid #f59e0b;
+      padding: 1rem;
+      margin: 1rem 0;
+      border-radius: 8px;
+      color: #92400e;
+      font-size: 0.95rem;
+    }
+
+    /* Back Button */
+    .back-btn {
+      display: inline-block;
+      margin: 2rem 0;
+      padding: 0.75rem 1.5rem;
+      background: #2563eb;
+      color: white;
+      border-radius: 50px;
+      text-decoration: none;
+      font-weight: bold;
+      transition: 0.3s;
+    }
+
+    .back-btn:hover {
+      background: #1e40af;
+    }
+
+    /* Footer */
+    footer {
+      background: #1e293b;
+      color: #cbd5e1;
+      text-align: center;
+      padding: 1.5rem;
+      margin-top: 3rem;
+      font-size: 0.9rem;
+    }
+  </style>
+</head>
+<body>
+  <!-- Navbar -->
+  <nav>
+    <div class="logo">DisasterReady EDU</div>
+    <div>
+      <a href="MAIN1.HTML">Home</a>
+      <a href="firstaid.html" class="active">First Aid</a>
+      <a href="#">Resources</a>
+      <a href="#">Contact</a>
+    </div>
+  </nav>
+
+  <!-- Hero -->
+  <section class="hero">
+    <h1>First Aid Guide</h1>
+    <p>Essential emergency techniques to stabilize and protect lives until professional help arrives.</p>
+  </section>
+
+  <!-- Main Content -->
+  <div class="container">
+    <div class="accordion">
+      <div class="accordion-header">🩸 Bleeding <span>+</span></div>
+      <div class="accordion-content">
+        <ul>
+          <li>Apply direct pressure with clean cloth or bandage.</li>
+          <li>Elevate the injured area if possible.</li>
+          <li>Do not remove soaked cloth — add more layers.</li>
+          <li>Seek immediate medical help if bleeding is severe.</li>
+        </ul>
+        <div class="precautions">
+          ⚠️ Precautions:  
+          <ul>
+            <li>Always wear gloves if available to prevent infection.</li>
+            <li>Do not apply a tourniquet unless professionally trained.</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <div class="accordion">
+      <div class="accordion-header">🔥 Burns <span>+</span></div>
+      <div class="accordion-content">
+        <ul>
+          <li>Cool under running water for at least 10 minutes.</li>
+          <li>Never apply ice, butter, or toothpaste.</li>
+          <li>Cover with a sterile, non-stick bandage.</li>
+          <li>Call emergency services for large or deep burns.</li>
+        </ul>
+        <div class="precautions">
+          ⚠️ Precautions:  
+          <ul>
+            <li>Do not break blisters — it increases infection risk.</li>
+            <li>Remove jewelry near the burn area before swelling starts.</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <div class="accordion">
+      <div class="accordion-header">🤢 Choking <span>+</span></div>
+      <div class="accordion-content">
+        <ul>
+          <li>Ask if the person can speak or cough.</li>
+          <li>If not, perform abdominal thrusts (Heimlich maneuver).</li>
+          <li>If the person becomes unconscious, call emergency services immediately.</li>
+        </ul>
+        <div class="precautions">
+          ⚠️ Precautions:  
+          <ul>
+            <li>Never perform abdominal thrusts on infants under 1 year — use back blows.</li>
+            <li>Be gentle with elderly people to avoid rib injuries.</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <div class="accordion">
+      <div class="accordion-header">💔 CPR <span>+</span></div>
+      <div class="accordion-content">
+        <ul>
+          <li>Check for breathing and responsiveness.</li>
+          <li>Call emergency services immediately.</li>
+          <li>Begin chest compressions: 100–120 per minute.</li>
+          <li>If trained, give 2 rescue breaths after every 30 compressions.</li>
+        </ul>
+        <div class="precautions">
+          ⚠️ Precautions:  
+          <ul>
+            <li>Ensure the person is on a flat, firm surface.</li>
+            <li>Do not stop compressions until help arrives or the person recovers.</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <div class="accordion">
+      <div class="accordion-header">🐍 Poisoning / Bites <span>+</span></div>
+      <div class="accordion-content">
+        <ul>
+          <li>Do not induce vomiting unless instructed by professionals.</li>
+          <li>Keep the person calm and still.</li>
+          <li>Call poison control or emergency services immediately.</li>
+        </ul>
+        <div class="precautions">
+          ⚠️ Precautions:  
+          <ul>
+            <li>For snake bites, keep the affected limb immobilized below heart level.</li>
+            <li>Do not try to suck out venom or cut the wound.</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <a href="index.html" class="back-btn">⬅ Back to Home</a>
+  </div>
+
+  <!-- Footer -->
+  <footer>
+    © 2025 DisasterReady EDU | Emergency Preparedness for Everyone
+  </footer>
+
+  <!-- JS for Accordion -->
+  <script>
+    const accordions = document.querySelectorAll('.accordion');
+    accordions.forEach(acc => {
+      acc.querySelector('.accordion-header').addEventListener('click', () => {
+        acc.classList.toggle('active');
+        let sign = acc.classList.contains('active') ? "−" : "+";
+        acc.querySelector('span').textContent = sign;
+      });
+    });
+  </script>
+</body>
+</html>

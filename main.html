@@ -1,0 +1,688 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Disaster Preparedness & Response Education System</title>
+
+  <style>
+    /* ===============================
+       Basic variables & accessibility
+       =============================== */
+    :root{
+      --primary: #1e40af; /* stronger, more contrast-friendly blue */
+      --danger: #b91c1c;  /* darker red for contrast */
+      --warning: #b45309; /* darker orange */
+      --success: #059669;
+      --dark: #0f172a;
+      --light: #ffffff;
+      --muted: #64748b;
+      --glass: rgba(255,255,255,0.92);
+      --focus: #ffbf00;
+      --max-width: 1400px;
+    }
+
+    /* Beautiful Dark Mode */
+    body.dark-mode {
+        background: #1a202c !important;
+        color: #e2e8f0; /* Enhanced text visibility */
+    }
+    body.dark-mode .alert-banner {
+        background: linear-gradient(90deg, #9b6c00, #ffcc33);
+        color: #1a202c;
+    }
+    body.dark-mode .nav-inner,
+    body.dark-mode .hero-card,
+    body.dark-mode .resources,
+    body.dark-mode .training-card,
+    body.dark-mode .modal-content,
+    body.dark-mode .tab-btn {
+        background: #2d3748;
+        color: #e2e8f0;
+        box-shadow: 0 4px 12px rgba(0,0,0,0.3);
+    }
+    body.dark-mode .action-card {
+        background: #2d3748;
+        color: #e2e8f0;
+        border: 1px solid #4a5568;
+    }
+    body.dark-mode .action-card:hover, body.dark-mode .action-card:focus {
+        background: #4a5568;
+        transform: translateY(-4px);
+    }
+    body.dark-mode .logo-icon {
+        background: linear-gradient(135deg, #4a5568, #636b77);
+        color: #e2e8f0;
+    }
+    body.dark-mode .nav-links a {
+        color: #e2e8f0;
+    }
+    body.dark-mode .tab-btn.active {
+        background: linear-gradient(135deg, #1e40af, #4a9191);
+        color: white;
+    }
+    body.dark-mode .emergency-btn {
+        background: linear-gradient(135deg, #9b1c1c, #d62d2d);
+        color: #ffc107;
+    }
+    body.dark-mode .training-header {
+        background: linear-gradient(135deg, #1e40af, #385966);
+    }
+    body.dark-mode .training-body {
+        color: #e2e8f0; /* All text is now clearly visible */
+    }
+    body.dark-mode .resource-item {
+        background: #2d3748;
+        color: #e2e8f0;
+        border-left: 4px solid #4a69a0; /* Replaced white stripe */
+    }
+    body.dark-mode .progress-bar {
+      background:#4a5568;
+    }
+    body.dark-mode .progress-fill {
+      background:linear-gradient(90deg,#059669,#34d399);
+    }
+    body.dark-mode .emergency-numbers {
+        background: linear-gradient(135deg, #9b1c1c, #d62d2d);
+    }
+    body.dark-mode footer {
+        background: #1a202c;
+    }
+    body.dark-mode .bg-particles {
+        background-image: radial-gradient(circle at 10% 10%, rgba(255,255,255,0.06) 1px, transparent 1px);
+    }
+
+
+    /* Visually hidden for screen readers */
+    .visually-hidden {
+      position: absolute !important;
+      height: 1px; width: 1px;
+      overflow: hidden;
+      clip: rect(1px, 1px, 1px, 1px);
+      white-space: nowrap;
+      border: 0; padding: 0; margin: -1px;
+    }
+
+    /* Reset & base */
+    *{ box-sizing: border-box; }
+    html,body{ height:100%; margin:0; padding:0; }
+    body{
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, sans-serif;
+      background: linear-gradient(135deg, #6b7280 0%, #374151 100%);
+      color: var(--dark);
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
+      line-height: 1.4;
+      min-height: 100vh;
+    }
+
+    /* skip link */
+    .skip-link{
+      position:absolute;
+      left:0; top:0;
+      transform:translateY(-120%);
+      background:var(--primary);
+      color:var(--light);
+      padding:.5rem 1rem;
+      z-index:10000;
+      text-decoration:none;
+    }
+    .skip-link:focus{ transform:none; border-radius:4px; }
+
+    .container{ max-width:var(--max-width); margin:0 auto; padding:0 1rem; }
+
+    /* Header / navigation */
+    header{ position: sticky; top:0; z-index:1000; }
+    nav{
+      background: rgba(255,255,255,0.98);
+      padding:1rem 0;
+      box-shadow: 0 6px 18px rgba(2,6,23,0.12);
+      backdrop-filter: blur(6px);
+    }
+    .nav-inner{ display:flex; align-items:center; justify-content:space-between; gap:1rem; }
+
+    .logo{ display:flex; align-items:center; gap:.5rem; font-weight:700; color:var(--primary); }
+    .logo-icon{
+      width:44px; height:44px; display:inline-flex; align-items:center; justify-content:center;
+      border-radius:8px; background:linear-gradient(135deg,var(--primary),var(--warning)); color:white;
+      font-size:1.1rem;
+    }
+
+    .nav-links{ display:flex; gap:1.25rem; list-style:none; align-items:center; margin:0; padding:0; }
+    .nav-links a{ color:var(--dark); text-decoration:none; font-weight:600; padding:.25rem 0; display:inline-block; }
+    .nav-links a:focus, .nav-links a:hover{ outline: none; text-decoration:underline; }
+    
+    .header-actions { display:flex; gap:1rem; align-items: center; }
+    .header-actions button {
+      border:none; background:none; cursor:pointer; font-size:1rem;
+    }
+
+    .emergency-btn{
+      background: linear-gradient(135deg,var(--danger), #ef4444);
+      color: #ffc107; /* New color for emergency text */
+      padding: .6rem 1rem;
+      border: none;
+      border-radius: 999px;
+      font-weight:700;
+      cursor:pointer;
+      display:inline-flex;
+      gap:.5rem;
+      align-items:center;
+    }
+    .emergency-btn:focus{ outline:3px solid var(--focus); outline-offset:3px; }
+
+    @media (prefers-reduced-motion: reduce){
+      *{ animation: none !important; transition: none !important; }
+      .bg-particles{ display:none; }
+    }
+
+    .bg-particles{
+      position:fixed; inset:0; z-index:-1; pointer-events:none;
+      background-image: radial-gradient(circle at 10% 10%, rgba(255,255,255,0.03) 1px, transparent 1px);
+      background-size: 50px 50px;
+      opacity:.6;
+      animation: bg-drift 30s linear infinite;
+    }
+    @keyframes bg-drift { from{ transform:translate(0,0)} to{ transform:translate(80px,80px)} }
+
+    .alert-banner{
+      background: linear-gradient(90deg,var(--warning), #fbbf24);
+      color:var(--dark);
+      padding:.9rem; margin:1rem auto; border-radius:12px;
+      max-width:var(--max-width);
+      font-weight:700;
+      display:flex; align-items:center; justify-content:center;
+    }
+    .alert-banner[aria-live] { box-shadow: 0 6px 18px rgba(180,90,10,0.12); }
+
+    main{ padding:1.25rem 0 3rem; }
+
+    .hero{
+      max-width:var(--max-width); margin: .75rem auto; padding:1.2rem;
+    }
+    .hero-card{
+      background: var(--glass);
+      border-radius:18px; padding:1.75rem;
+      box-shadow: 0 14px 40px rgba(2,6,23,0.10);
+      text-align:center;
+    }
+    .hero-card h1{
+      font-size:2rem; margin-bottom:.4rem; color:var(--primary);
+    }
+    .hero-card p{ color:var(--muted); margin-bottom:1rem; }
+
+    .quick-actions{
+      display:grid; grid-template-columns: repeat(auto-fit,minmax(220px,1fr)); gap:1rem; margin-top:1rem;
+    }
+    .action-card{
+      padding:1rem; border-radius:12px; background:var(--light); cursor:pointer;
+      border:1px solid rgba(2,6,23,0.04);
+      display:flex; flex-direction:column; gap:.5rem; align-items:center; text-align:center;
+      transition: transform .12s ease, box-shadow .12s ease;
+      text-decoration: none;
+      color: inherit;
+    }
+    .action-card h3 { margin:0; }
+    .action-card:focus, .action-card:hover{ transform:translateY(-6px); box-shadow: 0 10px 30px rgba(2,6,23,0.08); outline:3px solid var(--focus); outline-offset:3px; }
+
+    .action-icon{ width:64px; height:64px; border-radius:50%; display:inline-flex; align-items:center; justify-content:center; background:linear-gradient(135deg,var(--primary),var(--success)); color:white; font-size:1.6rem; }
+
+    .resources{
+      background:var(--light); border-radius:18px; padding:1.5rem; margin:1.25rem auto; max-width:var(--max-width);
+      box-shadow:0 12px 36px rgba(2,6,23,0.08);
+    }
+    .resource-tabs{ display:flex; gap:.5rem; flex-wrap:wrap; justify-content:center; margin-bottom:1rem; }
+    .tab-btn{ background:#f3f4f6; border:1px solid transparent; padding:.5rem .9rem; border-radius:999px; cursor:pointer; font-weight:600; }
+    .tab-btn.active{ background:linear-gradient(135deg,var(--primary),var(--success)); color:white; box-shadow: 0 8px 28px rgba(2,6,23,0.06); }
+    .tab-content{ display:none; }
+    .tab-content.active{ display:block; }
+
+    .resource-grid{ display:grid; grid-template-columns: repeat(auto-fit,minmax(240px,1fr)); gap:1rem; }
+    .resource-item{ background:#fafafa; padding:1rem; border-radius:10px; border-left:4px solid var(--primary); }
+
+    .training{ max-width:var(--max-width); margin:1rem auto; padding:0 1rem 1rem; }
+    .training-cards{ display:grid; grid-template-columns: repeat(auto-fit,minmax(260px,1fr)); gap:1rem; }
+    .training-card{ background:var(--light); border-radius:12px; overflow:hidden; box-shadow:0 8px 26px rgba(2,6,23,0.06); }
+    .training-header{ padding:1rem; background:linear-gradient(135deg,var(--primary),var(--success)); color:white; }
+    .training-body{ padding:1rem; color:var(--muted); }
+
+    .progress-bar{ background:#f3f4f6; height:10px; border-radius:999px; overflow:hidden; }
+    .progress-fill{ height:100%; background:linear-gradient(90deg,var(--success), #34d399); width:0%; transition: width 1.4s ease; }
+
+    .emergency-numbers{ max-width:var(--max-width); margin:1rem auto; padding:1rem; border-radius:12px; background:linear-gradient(135deg,var(--danger), #ef4444); color:white; }
+    .numbers-grid{ display:grid; grid-template-columns: repeat(auto-fit,minmax(160px,1fr)); gap:.5rem; }
+    .number-item{ background:rgba(255,255,255,0.12); padding:.65rem; border-radius:8px; text-align:center; }
+
+    footer{ background:var(--dark); color:white; padding:1.25rem; margin-top:1rem; }
+
+    .modal{
+      display:none; position:fixed; inset:0; z-index:2000; align-items:center; justify-content:center;
+      background: rgba(2,6,23,0.6); padding:1rem;
+    }
+    .modal.active{ display:flex; }
+    .modal-content{
+      background:var(--light); padding:1rem 1.25rem; border-radius:12px; width:100%; max-width:640px; box-shadow:0 18px 48px rgba(2,6,23,0.18);
+    }
+    .close-btn{ background:transparent; border:0; font-size:1.25rem; cursor:pointer; color:var(--dark); float:right; }
+
+    :focus{ outline: 3px solid var(--focus); outline-offset:3px; }
+    :focus:not(:focus-visible){ outline: none; }
+
+    @media (max-width:768px){
+      .nav-links{ display:none; }
+      .hero-card h1{ font-size:1.6rem; }
+    }
+
+    .progress-fill[data-progress]{ width: var(--progress, 0%); }
+
+    noscript .no-js-fallback{ display:block; }
+  </style>
+</head>
+<body>
+  <a class="skip-link" href="#main">Skip to main content</a>
+  <div class="bg-particles" aria-hidden="true"></div>
+
+  <header>
+    <nav aria-label="Main navigation">
+      <div class="container nav-inner">
+        <div class="logo" aria-hidden="false">
+          <div class="logo-icon" aria-hidden="true">🛡️</div>
+          <a href="#home" style="color:var(--primary); text-decoration:none; font-weight:700;">DisasterReady EDU</a>
+        </div>
+
+        <ul class="nav-links" role="menubar" aria-label="Primary">
+          <li role="none"><a role="menuitem" href="main.html">Home</a></li>
+          <li role="none"><a role="menuitem" href="#resources">Resources</a></li>
+          <li role="none"><a role="menuitem" href="#training">Training</a></li>
+          <li role="none"><a role="menuitem" href="#drills">Drills</a></li>
+          <li role="none"><a role="menuitem" href="#contact">Contact</a></li>
+        </ul>
+
+        <div class="header-actions">
+          <button id="contrastBtn" aria-label="Toggle dark mode">
+            <span id="contrast-icon" aria-hidden="true">☀️</span>
+          </button>
+          <button id="emergencyBtn" class="emergency-btn" aria-haspopup="dialog" aria-controls="modal">
+            <span aria-hidden="true">🚨</span><span>EMERGENCY</span>
+          </button>
+        </div>
+      </div>
+    </nav>
+  </header>
+
+  <div class="alert-banner" role="status" aria-live="polite" aria-atomic="true">
+    ⚠️ Next Campus-Wide Emergency Drill: Friday, October 15, 2025 — 10:00 AM
+  </div>
+
+  <main id="main" tabindex="-1" class="container">
+    <section id="home" class="hero" aria-labelledby="hero-heading">
+      <div class="hero-card" role="region" aria-labelledby="hero-heading">
+        <h1 id="hero-heading">Be Prepared, Stay Safe</h1>
+        <p>Comprehensive Disaster Preparedness & Response Education for Schools and Colleges</p>
+
+        <div class="quick-actions" role="list">
+          <a class="action-card" href="evacuation.html" role="button">
+            <div class="action-icon" aria-hidden="true">🚪</div>
+            <h3>Evacuation Maps</h3>
+            <p>Access evacuation routes and assembly points for your building.</p>
+          </a>
+
+          <a class="action-card" href="firstaid.html" role="button">
+            <div class="action-icon" aria-hidden="true">🏥</div>
+            <h3>First Aid Guide</h3>
+            <p>Learn essential first aid techniques for emergency situations.</p>
+          </a>
+
+          <a class="action-card" href="alk.html" role="button">
+            <div class="action-icon" aria-hidden="true">📢</div>
+            <h3>Alert System</h3>
+            <p>Register for instant emergency notifications and updates.</p>
+          </a>
+
+          <a class="action-card" href="emergency.html"> <role="button">
+            <div class="action-icon" aria-hidden="true">🎒</div>
+            <h3>Emergency Kits</h3>
+            <p>Checklist for personal and classroom emergency supply kits.</p>
+          </a>
+        </div>
+      </div>
+    </section>
+
+    <section aria-labelledby="emerg-num-heading" class="emergency-numbers" role="region">
+      <h2 id="emerg-num-heading" style="text-align:center; margin:0 0 .5rem 0;">Emergency Contact Numbers</h2>
+      <div class="numbers-grid" role="list">
+        <div class="number-item" role="listitem">
+          <div>Campus Security</div>
+          <div class="number"><a href="tel:5550100" style="color:inherit; text-decoration:underline;" aria-label="Call campus security">555-0100</a></div>
+        </div>
+        <div class="number-item" role="listitem">
+          <div>Medical Emergency</div>
+          <div class="number"><a href="tel:911" style="color:inherit; text-decoration:underline;" aria-label="Call emergency medical services">911</a></div>
+        </div>
+        <div class="number-item" role="listitem">
+          <div>Fire Department</div>
+          <div class="number"><a href="tel:5550102" style="color:inherit; text-decoration:underline;" aria-label="Call fire department">555-0102</a></div>
+        </div>
+        <div class="number-item" role="listitem">
+          <div>Crisis Hotline</div>
+          <div class="number"><a href="tel:5550103" style="color:inherit; text-decoration:underline;" aria-label="Call crisis hotline">555-0103</a></div>
+        </div>
+      </div>
+    </section>
+
+    <section id="resources" class="resources" aria-labelledby="resources-heading" role="region">
+      <h2 id="resources-heading" style="text-align:center; margin-top:0;">Disaster Response Resources</h2>
+      <div class="resource-tabs" role="tablist" aria-label="Resource categories">
+        <button class="tab-btn active" role="tab" aria-selected="true" aria-controls="tab-natural" id="tab-natural-btn">Natural Disasters</button>
+        <button class="tab-btn" role="tab" aria-selected="false" aria-controls="tab-fire" id="tab-fire-btn">Fire Safety</button>
+        <button class="tab-btn" role="tab" aria-selected="false" aria-controls="tab-medical" id="tab-medical-btn">Medical Emergency</button>
+        <button class="tab-btn" role="tab" aria-selected="false" aria-controls="tab-security" id="tab-security-btn">Security Threats</button>
+      </div>
+
+      <div id="tab-natural" class="tab-content active" role="tabpanel" aria-labelledby="tab-natural-btn">
+        <div class="resource-grid">
+          <div class="resource-item">
+            <h4>🌊 Flood Response</h4>
+            <p>Move to higher ground immediately. Avoid walking through moving water. Stay informed through emergency alerts.</p>
+          </div>
+          <div class="resource-item">
+            <h4>🌪️ Tornado Safety</h4>
+            <p>Seek shelter in the lowest floor, interior room. Stay away from windows. Cover your head and neck.</p>
+          </div>
+          <div class="resource-item">
+            <h4>🏔️ Earthquake Protocol</h4>
+            <p>Drop, Cover, and Hold On. Stay away from windows and heavy objects. Do not run outside during shaking.</p>
+          </div>
+        </div>
+      </div>
+
+      <div id="tab-fire" class="tab-content" role="tabpanel" aria-labelledby="tab-fire-btn" hidden>
+        <div class="resource-grid">
+          <div class="resource-item">
+            <h4>🔥 Fire Evacuation</h4>
+            <p>Use nearest exit, stay low if smoke present. Never use elevators. Meet at designated assembly point.</p>
+          </div>
+          <div class="resource-item">
+            <h4>🧯 Fire Extinguisher Use</h4>
+            <p>Remember PASS: Pull pin, Aim at base, Squeeze handle, Sweep side to side.</p>
+          </div>
+          <div class="resource-item">
+            <h4>🚨 Fire Alarm Response</h4>
+            <p>Evacuate immediately when alarm sounds. Close doors behind you. Alert others as you leave.</p>
+          </div>
+        </div>
+      </div>
+
+      <div id="tab-medical" class="tab-content" role="tabpanel" aria-labelledby="tab-medical-btn" hidden>
+        <div class="resource-grid">
+          <div class="resource-item">
+            <h4>💊 Medical Emergency</h4>
+            <p>Call 911 immediately. Provide clear location and symptoms. Stay with the person until help arrives.</p>
+          </div>
+          <div class="resource-item">
+            <h4>❤️ CPR Basics</h4>
+            <p>30 chest compressions, 2 rescue breaths. Push hard and fast at 100-120 compressions per minute.</p>
+          </div>
+          <div class="resource-item">
+            <h4>🩹 Bleeding Control</h4>
+            <p>Apply direct pressure to wound. Elevate if possible. Use tourniquet only for life-threatening bleeding.</p>
+          </div>
+        </div>
+      </div>
+
+      <div id="tab-security" class="tab-content" role="tabpanel" aria-labelledby="tab-security-btn" hidden>
+        <div class="resource-grid">
+          <div class="resource-item">
+            <h4>🔒 Lockdown Procedure</h4>
+            <p>Lock doors, turn off lights, silence phones. Stay away from windows. Wait for all-clear from authorities.</p>
+          </div>
+          <div class="resource-item">
+            <h4>👤 Suspicious Activity</h4>
+            <p>Report immediately to security. Note descriptions and behaviors. Do not confront suspicious persons.</p>
+          </div>
+          <div class="resource-item">
+            <h4>📱 Emergency Communication</h4>
+            <p>Sign up for campus alerts. Keep phone charged. Have backup communication methods ready.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="training" class="training" aria-labelledby="training-heading" role="region">
+      <h2 id="training-heading" style="color:white; text-align:center;">Training Programs</h2>
+
+      <div class="training-cards" aria-live="polite">
+        <article class="training-card" aria-labelledby="course1">
+          <div class="training-header">
+            <h3 id="course1">Basic Emergency Response</h3>
+            <p>Foundation Course</p>
+          </div>
+          <div class="training-body">
+            <p>Learn fundamental emergency response procedures including evacuation, sheltering, and basic first aid.</p>
+            <div class="progress-bar" aria-hidden="true"><div class="progress-fill" data-progress style="--progress:75%"></div></div>
+            <p>Progress: <strong>75%</strong></p>
+            <a href="#course-link" class="action-card" aria-label="Continue Basic Emergency Response">Continue Learning</a>
+          </div>
+        </article>
+
+        <article class="training-card" aria-labelledby="course2">
+          <div class="training-header">
+            <h3 id="course2">Advanced First Aid</h3>
+            <p>Certification Course</p>
+          </div>
+          <div class="training-body">
+            <p>Comprehensive first aid training including CPR certification, wound care, and emergency medical response.</p>
+            <div class="progress-bar" aria-hidden="true"><div class="progress-fill" data-progress style="--progress:40%"></div></div>
+            <p>Progress: <strong>40%</strong></p>
+            <a href="#course-link" class="action-card" aria-label="Continue Advanced First Aid">Continue Learning</a>
+          </div>
+        </article>
+
+        <article class="training-card" aria-labelledby="course3">
+          <div class="training-header">
+            <h3 id="course3">Crisis Leadership</h3>
+            <p>Advanced Course</p>
+          </div>
+          <div class="training-body">
+            <p>Develop leadership skills for emergency situations, incident command basics, and crisis communication.</p>
+            <div class="progress-bar" aria-hidden="true"><div class="progress-fill" data-progress style="--progress:20%"></div></div>
+            <p>Progress: <strong>20%</strong></p>
+            <a href="leadership.html" class="action-card" aria-label="Start Crisis Leadership">Start Course</a>
+          </div>
+        </article>
+      </div>
+    </section>
+  </main>
+
+  <div id="modal" class="modal" role="dialog" aria-modal="true" aria-hidden="true" aria-labelledby="modal-title" aria-describedby="modal-desc">
+    <div class="modal-content" role="document">
+      <button class="close-btn" id="modalCloseBtn" aria-label="Close dialog">&times;</button>
+      <h2 id="modal-title">Modal Title</h2>
+      <div id="modal-desc">Modal content goes here.</div>
+      <div style="margin-top:1rem;" id="modal-actions-container">
+        </div>
+    </div>
+  </div>
+
+  <footer role="contentinfo">
+    <div class="container">
+      <div style="display:flex; justify-content:space-between; align-items:center; gap:1rem; flex-wrap:wrap;">
+        <div>
+          <strong>DisasterReady EDU</strong>
+          <div style="color:rgba(255,255,255,0.8);">Preparedness & response education for schools</div>
+        </div>
+        <div style="text-align:right; color:rgba(255,255,255,0.8);">© <span id="year"></span> DisasterReady EDU</div>
+      </div>
+    </div>
+  </footer>
+
+  <noscript>
+    <div class="no-js-fallback" style="background:#fff;padding:1rem;border-radius:8px;margin:1rem auto;max-width:var(--max-width);box-shadow:0 8px 20px rgba(2,6,23,0.06);">
+      <strong>Important:</strong>
+      <p>JavaScript is disabled. If you are in an emergency, please call: Campus Security — 555-0100; Medical Emergency — 911; Fire Department — 555-0102; Crisis Hotline — 555-0103.</p>
+    </div>
+  </noscript>
+
+  <script src="https://unpkg.com/wicg-inert/dist/inert.min.js"></script>
+
+  <script>
+    (function(){
+      const FOCUSABLE_SELECTORS = 'a[href], area[href], input:not([disabled]), select:not([disabled]), textarea:not([disabled]), button:not([disabled]), [tabindex]:not([tabindex="-1"])';
+
+      function getFocusable(el){
+        return Array.from(el.querySelectorAll(FOCUSABLE_SELECTORS)).filter(e => e.offsetParent !== null);
+      }
+
+      document.getElementById('year').textContent = new Date().getFullYear();
+
+      const modal = document.getElementById('modal');
+      const modalTitle = document.getElementById('modal-title');
+      const modalDesc = document.getElementById('modal-desc');
+      const modalCloseBtn = document.getElementById('modalCloseBtn');
+      const modalActionsContainer = document.getElementById('modal-actions-container');
+
+      let lastFocused = null;
+
+      function setMainInert(value){
+        const main = document.querySelector('main');
+        if(!main) return;
+        if(value){
+          main.setAttribute('aria-hidden','true');
+          if('inert' in main) main.inert = true;
+          else main.setAttribute('inert','');
+        } else {
+          main.removeAttribute('aria-hidden');
+          if('inert' in main) main.inert = false;
+          else main.removeAttribute('inert');
+        }
+      }
+
+      function openModal({ title, description, actions = [] }){
+        lastFocused = document.activeElement;
+
+        modalTitle.textContent = title;
+        modalDesc.innerHTML = description;
+        modalActionsContainer.innerHTML = '';
+        actions.forEach(action => {
+          const button = document.createElement('a');
+          button.href = action.href || '#';
+          button.textContent = action.label;
+          button.className = 'action-card';
+          if(action.className) button.classList.add(action.className);
+          if(action.onclick) {
+            button.onclick = (e) => {
+              e.preventDefault();
+              action.onclick();
+            };
+          }
+          modalActionsContainer.appendChild(button);
+        });
+
+        setMainInert(true);
+        modal.setAttribute('aria-hidden','false');
+        modal.classList.add('active');
+
+        const focusable = getFocusable(modal);
+        if(focusable.length) focusable[0].focus();
+
+        document.addEventListener('keydown', handleKeyDown);
+        modal.addEventListener('click', handleOutsideClick);
+      }
+
+      function closeModal(){
+        modal.setAttribute('aria-hidden','true');
+        modal.classList.remove('active');
+        setMainInert(false);
+
+        document.removeEventListener('keydown', handleKeyDown);
+        modal.removeEventListener('click', handleOutsideClick);
+
+        if(lastFocused && typeof lastFocused.focus === 'function'){
+          lastFocused.focus();
+        }
+      }
+
+      function handleKeyDown(e){
+        if(e.key === 'Escape'){
+          e.preventDefault();
+          closeModal();
+          return;
+        }
+        if(e.key === 'Tab'){
+          const focusable = getFocusable(modal);
+          if(focusable.length === 0){
+            e.preventDefault();
+            return;
+          }
+          const first = focusable[0], last = focusable[focusable.length -1];
+          if(e.shiftKey && document.activeElement === first){
+            e.preventDefault();
+            last.focus();
+          }
+          else if(!e.shiftKey && document.activeElement === last){
+            e.preventDefault();
+            first.focus();
+          }
+        }
+      }
+
+      function handleOutsideClick(e){
+        if(!modal.querySelector('.modal-content').contains(e.target) && e.target !== modalCloseBtn){
+          closeModal();
+        }
+      }
+
+      // Quick actions and emergency button wiring
+      document.getElementById('emergencyBtn').addEventListener('click', () => {
+        openModal({
+          title: '🚨 EMERGENCY — What to do NOW',
+          description: '<p>If this is a real emergency, take a deep breath. Call campus security or 100. Follow official instructions and wait for updates.</p>',
+          actions: [
+            { label: 'Call 100', href: 'tel:100' },
+            { label: 'Call Campus Security', href: 'tel:01792239567' }
+          ]
+        });
+      });
+
+      modalCloseBtn.addEventListener('click', closeModal);
+
+      // Tab functionality
+      document.querySelectorAll('.tab-btn').forEach(button => {
+        button.addEventListener('click', () => {
+          document.querySelectorAll('.tab-btn').forEach(btn => {
+            btn.classList.remove('active');
+            btn.setAttribute('aria-selected', 'false');
+          });
+          document.querySelectorAll('.tab-content').forEach(content => {
+            content.classList.remove('active');
+            content.setAttribute('hidden', 'true');
+          });
+
+          button.classList.add('active');
+          button.setAttribute('aria-selected', 'true');
+          const targetId = button.getAttribute('aria-controls');
+          document.getElementById(targetId).classList.add('active');
+          document.getElementById(targetId).removeAttribute('hidden');
+        });
+      });
+
+      // Dark mode toggle
+      document.getElementById('contrastBtn').addEventListener('click', () => {
+        document.body.classList.toggle('dark-mode');
+        const isDarkMode = document.body.classList.contains('dark-mode');
+        document.getElementById('contrastBtn').setAttribute('aria-label', isDarkMode ? 'Turn off dark mode' : 'Toggle dark mode');
+        document.getElementById('contrast-icon').textContent = isDarkMode ? '🌙' : '☀️';
+      });
+
+      // Progress bars
+      window.addEventListener('load', () => {
+        document.querySelectorAll('.progress-fill[data-progress]').forEach(el => {
+          const w = getComputedStyle(el).getPropertyValue('--progress') || '0%';
+          el.style.width = w;
+        });
+      });
+
+    })();
+  </script>
+</body>
+</html>

@@ -1,0 +1,354 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Crisis Leadership | DisasterReady EDU</title>
+  <style>
+    :root {
+      --primary: #1e40af;
+      --success: #059669;
+      --dark: #0f172a;
+      --light: #ffffff;
+      --muted: #64748b;
+      --focus: #ffbf00;
+    }
+    body {
+      background: linear-gradient(135deg, #6b7280 0%, #374151 100%);
+      font-family: 'Segoe UI', Arial, sans-serif;
+      color: var(--dark);
+      margin: 0;
+      min-height: 100vh;
+    }
+    header {
+      background: #fff;
+      box-shadow: 0 6px 18px rgba(2,6,23,0.12);
+      padding: 1.2rem 0;
+      position: sticky;
+      top: 0;
+      z-index: 100;
+    }
+    .container {
+      max-width: 900px;
+      margin: 0 auto;
+      padding: 0 1rem;
+    }
+    .logo {
+      color: var(--primary);
+      font-weight: 700;
+      font-size: 1.2rem;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      text-decoration: none;
+    }
+    .logo-icon {
+      font-size: 2rem;
+      background: linear-gradient(135deg, var(--primary), var(--success));
+      border-radius: 8px;
+      color: white;
+      width: 44px;
+      height: 44px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    nav {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    nav ul {
+      display: flex;
+      gap: 1.5rem;
+      margin: 0;
+      padding: 0;
+      list-style: none;
+    }
+    nav a {
+      color: var(--dark);
+      text-decoration: none;
+      font-weight: 600;
+      transition: color 0.16s;
+    }
+    nav a:hover {
+      color: var(--primary);
+    }
+    main {
+      margin: 2rem 0;
+    }
+    .hero-card {
+      background: rgba(255, 255, 255, 0.92);
+      border-radius: 18px;
+      box-shadow: 0 10px 32px rgba(2, 6, 23, 0.10);
+      text-align: center;
+      padding: 2.4rem 2rem 2rem;
+      margin-bottom: 2rem;
+    }
+    .hero-card h1 {
+      color: var(--primary);
+      font-size: 2.4rem;
+      margin-bottom: 0.6rem;
+    }
+    .hero-card p {
+      color: var(--muted);
+      margin-bottom: 1.2rem;
+      font-size: 1.1rem;
+    }
+    .cta-btn {
+      display: inline-block;
+      background: linear-gradient(135deg, var(--primary), var(--success));
+      color: #fff;
+      font-weight: 700;
+      padding: 0.8rem 2rem;
+      border-radius: 999px;
+      box-shadow: 0 2px 12px rgba(30, 64, 175, 0.12);
+      text-decoration: none;
+      font-size: 1.1rem;
+      border: none;
+      cursor: pointer;
+      transition: background 0.16s, transform 0.12s;
+    }
+    .cta-btn:hover {
+      background: var(--success);
+      transform: translateY(-2px);
+    }
+    section {
+      background: #fff;
+      margin-bottom: 2rem;
+      padding: 2rem;
+      border-radius: 16px;
+      box-shadow: 0 4px 20px rgba(2, 6, 23, 0.10);
+    }
+    h2 {
+      color: var(--primary);
+    }
+    .modules-list {
+      padding-left: 1.2rem;
+    }
+    .modules-list li {
+      margin-bottom: 0.4rem;
+    }
+    .contact-card {
+      background: #f7fafc;
+      padding: 1.6rem;
+      border-radius: 10px;
+      color: var(--dark);
+      margin-top: 1rem;
+    }
+    .contact-card a {
+      color: var(--primary);
+    }
+    .questions-list {
+      list-style: none;
+      padding-left: 0;
+      margin-top: 1rem;
+    }
+    .questions-list li {
+      background: #f1f5f9;
+      border-radius: 8px;
+      margin-bottom: 0.6rem;
+      padding: 0.7rem;
+    }
+    .ask-form {
+      display: flex;
+      flex-direction: column;
+      gap: 0.8rem;
+    }
+    .ask-form label {
+      font-weight: 600;
+      color: var(--dark);
+    }
+    .ask-form textarea,
+    .ask-form input {
+      padding: 0.7rem;
+      border-radius: 5px;
+      border: 1px solid #64748b80;
+      font-size: 1rem;
+      font-family: inherit;
+      resize: vertical;
+    }
+    .ask-form button {
+      align-self: flex-start;
+    }
+    /* Enrollment Form */
+    #enroll {
+      background: #fff;
+      padding: 2rem;
+      border-radius: 16px;
+      box-shadow: 0 4px 20px rgba(2, 6, 23, 0.10);
+      margin-bottom: 2rem;
+      max-width: 600px;
+    }
+    form.enroll-form {
+      display: flex;
+      flex-direction: column;
+      gap: 1rem;
+    }
+    form.enroll-form label {
+      font-weight: 600;
+      color: var(--dark);
+    }
+    form.enroll-form input,
+    form.enroll-form textarea {
+      padding: 0.75rem;
+      border-radius: 6px;
+      border: 1px solid #64748b80;
+      font-size: 1rem;
+      font-family: inherit;
+      resize: vertical;
+    }
+    form.enroll-form input:focus,
+    form.enroll-form textarea:focus {
+      outline: 3px solid var(--focus);
+      border-color: var(--focus);
+    }
+    footer {
+      background: var(--dark);
+      padding: 1rem;
+      margin-top: 2rem;
+      color: #fff;
+      text-align: center;
+      letter-spacing: 0.03em;
+      border-radius: 0 0 12px 12px;
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <div class="container">
+      <nav>
+        <a class="logo" href="#">
+          <span class="logo-icon">🛡️</span>
+          DisasterReady EDU
+        </a>
+        <ul>
+          <li><a href="#overview">Overview</a></li>
+          <li><a href="#curriculum">Curriculum</a></li>
+          <li><a href="#questions">Questions</a></li>
+          <li><a href="#enroll">Enroll</a></li>
+          <li><a href="#contact">Contact</a></li>
+        </ul>
+      </nav>
+    </div>
+  </header>
+  <main>
+    <div class="container">
+      <div class="hero-card">
+        <h1>Crisis Leadership</h1>
+        <p>Lead with confidence in any emergency. Gain critical skills to make fast, effective decisions and communicate during crises.</p>
+        <a href="#questions" class="cta-btn">Ask a Question</a>
+      </div>
+
+      <section id="overview">
+        <h2>Course Overview</h2>
+        <p>This course empowers individuals to step up and lead in the face of disaster. Whether student, educator, or administrator, learn essential crisis management, incident command, and communication skills vital for safety.</p>
+        <ul class="modules-list">
+          <li>Understanding Leadership Roles in Disasters</li>
+          <li>Incident Command System Basics</li>
+          <li>Crisis Communication Essentials</li>
+          <li>Decision-Making Under Pressure</li>
+          <li>Team Coordination & Delegation</li>
+        </ul>
+      </section>
+
+      <section id="curriculum">
+        <h2>Curriculum Highlights</h2>
+        <ul class="modules-list">
+          <li><strong>Module 1:</strong> What Makes a Good Crisis Leader?</li>
+          <li><strong>Module 2:</strong> Responding to Emergencies – Step-by-Step</li>
+          <li><strong>Module 3:</strong> Communication Techniques for Leaders</li>
+          <li><strong>Module 4:</strong> Coordinating Emergency Teams</li>
+          <li><strong>Module 5:</strong> Scenario-Based Simulations</li>
+        </ul>
+      </section>
+
+      <section id="questions">
+        <h2>Questions & Answers</h2>
+        <form class="ask-form" id="askForm">
+          <label for="question">Have a question about crisis leadership?</label>
+          <textarea id="question" required placeholder="Type your question here..." rows="3"></textarea>
+          <button type="submit" class="cta-btn">Submit Question</button>
+        </form>
+        <h3 style="margin-top:2rem;">Recent Questions</h3>
+        <ul class="questions-list" id="questionsList">
+          <li>Can you give an example of how you've managed a crisis in the past?</li>
+          <li>How do you prioritize tasks during an emergency?</li>
+          <li>What is your process for receiving feedback from your team in a crisis?</li>
+          <li>How do leaders maintain clear and calm communication during a disaster?</li>
+          <li>What role does social media play in crisis communication?</li>
+          <li>How do you make effective decisions when information is incomplete or changing?</li>
+          <li>How should a leader handle disagreements or conflicts during an emergency?</li>
+          <li>What strategies help maintain team morale under high stress?</li>
+          <li>How do you prepare an organization for unexpected crises?</li>
+          <li>What are common mistakes leaders make in crisis situations?</li>
+        </ul>
+      </section>
+
+      <section id="enroll">
+        <h2>Enroll in Crisis Leadership Course</h2>
+        <p>Please fill out the form below to enroll. We will contact you with further details.</p>
+        <form id="enrollForm" class="enroll-form" novalidate>
+          <label for="fullName">Full Name *</label>
+          <input type="text" id="fullName" name="fullName" placeholder="Your full name" required />
+
+          <label for="email">Email Address *</label>
+          <input type="email" id="email" name="email" placeholder="you@example.com" required />
+
+          <label for="phone">Phone Number *</label>
+          <input type="tel" id="phone" name="phone" placeholder="+91 9876543210" required pattern="[0-9+\-\s]{7,15}" />
+
+          <label for="organization">Organization / School</label>
+          <input type="text" id="organization" name="organization" placeholder="Your organization or school" />
+
+          <label for="comments">Additional Comments or Questions</label>
+          <textarea id="comments" name="comments" rows="4" placeholder="Any other information or questions"></textarea>
+
+          <button type="submit" class="cta-btn">Submit Enrollment</button>
+        </form>
+      </section>
+
+      <section id="contact">
+        <h2>Contact & Support</h2>
+        <div class="contact-card">
+          <p>Questions? Need assistance? Reach out:</p>
+          <ul>
+            <li>Email: <a href="mailto:info@disasterready.edu">info@disasterready.edu</a></li>
+            <li>Phone: <a href="tel:01792239567">01792239567</a></li>
+            <li>Visit: DisasterReady EDU, Solan, Himachal Pradesh, India</li>
+          </ul>
+        </div>
+      </section>
+    </div>
+  </main>
+  <footer>
+    &copy; 2025 DisasterReady EDU &mdash; Be a Leader. Be Prepared.
+  </footer>
+
+  <script>
+    // Handle questions form submission
+    document.getElementById('askForm').addEventListener('submit', function(e) {
+      e.preventDefault();
+      const question = document.getElementById('question').value.trim();
+      if (question.length > 0) {
+        const li = document.createElement('li');
+        li.textContent = question;
+        document.getElementById('questionsList').prepend(li);
+        document.getElementById('question').value = '';
+      }
+    });
+
+    // Handle enrollment form submission with basic validation
+    document.getElementById('enrollForm').addEventListener('submit', function(e) {
+      e.preventDefault();
+      const form = e.target;
+      if (!form.checkValidity()) {
+        alert('Please fill out all required fields correctly.');
+        return;
+      }
+      alert('Thank you for enrolling! We will contact you shortly.');
+      form.reset();
+    });
+  </script>
+</body>
+</html>

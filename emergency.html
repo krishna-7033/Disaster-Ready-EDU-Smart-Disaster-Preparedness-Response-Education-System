@@ -1,0 +1,433 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Disaster Preparedness & Response Education System</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+    :root {
+      --primary: #2563eb;
+      --danger: #dc2626;
+      --warning: #f59e0b;
+      --success: #10b981;
+      --dark: #1e293b;
+      --light: #f8fafc;
+      --glass: rgba(255, 255, 255, 0.1);
+    }
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen,
+        Ubuntu, sans-serif;
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      min-height: 100vh;
+      color: var(--dark);
+      overflow-x: hidden;
+      padding: 20px;
+    }
+    h2 {
+      background: linear-gradient(135deg, var(--danger), var(--warning));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      margin-bottom: 1rem;
+      font-size: 2.5rem;
+      text-align: center;
+    }
+    /* Back Button Styles */
+    #back-btn-container {
+      margin-bottom: 1.5rem;
+      text-align: left;
+    }
+    #back-btn {
+      background: linear-gradient(135deg, var(--primary), var(--success));
+      color: white;
+      border: none;
+      border-radius: 50px;
+      padding: 0.55rem 1.5rem;
+      font-size: 1.07rem;
+      font-weight: 700;
+      cursor: pointer;
+      box-shadow: 0 8px 20px rgba(37, 99, 235, 0.13);
+      transition: background 0.3s, transform 0.1s;
+      margin-top: 0.5rem;
+      margin-bottom: 0.5rem;
+    }
+    #back-btn:hover {
+      background: #1e40af;
+      transform: scale(1.05);
+    }
+    .container {
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+    #emergency-kit {
+      background: rgba(255, 255, 255, 0.95);
+      backdrop-filter: blur(10px);
+      border-radius: 30px;
+      padding: 2rem;
+      margin-bottom: 3rem;
+      box-shadow: 0 20px 60px rgba(0, 0, 0, 0.15);
+    }
+    .resource-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 1.5rem;
+    }
+    .resource-item {
+      background: var(--light);
+      padding: 1.5rem 2rem;
+      border-radius: 15px;
+      border-left: 5px solid var(--primary);
+      box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+      transition: all 0.3s;
+    }
+    .resource-item:hover {
+      box-shadow: 0 15px 35px rgba(0, 0, 0, 0.15);
+    }
+    .resource-item h4 {
+      margin-bottom: 1rem;
+      color: var(--primary);
+      font-weight: 700;
+      font-size: 1.25rem;
+    }
+    form label {
+      display: block;
+      margin-bottom: 0.75rem;
+      font-weight: 500;
+      cursor: pointer;
+      color: var(--dark);
+    }
+    form input[type="checkbox"] {
+      margin-right: 0.5rem;
+      accent-color: var(--primary);
+    }
+    #emergency-kit button.emergency-btn {
+      margin-top: 1rem;
+      display: inline-block;
+      font-weight: 700;
+      background: linear-gradient(135deg, var(--danger), #ef4444);
+      color: white;
+      padding: 0.75rem 1.5rem;
+      border: none;
+      border-radius: 50px;
+      cursor: pointer;
+      transition: all 0.3s;
+      animation: blink 2s infinite;
+    }
+    @keyframes blink {
+      0%, 100% { box-shadow: 0 0 0 0 rgba(220, 38, 38, 0.5); }
+      50% { box-shadow: 0 0 20px 10px rgba(220, 38, 38, 0.2); }
+    }
+    #emergency-kit button.emergency-btn:hover {
+      transform: scale(1.05);
+      box-shadow: 0 10px 30px rgba(220, 38, 38, 0.3);
+    }
+    #kit-builder {
+      background: rgba(255, 255, 255, 0.95);
+      backdrop-filter: blur(10px);
+      border-radius: 30px;
+      padding: 2rem;
+      margin-bottom: 3rem;
+      box-shadow: 0 20px 60px rgba(0, 0, 0, 0.15);
+      max-width: 900px;
+    }
+    #kit-builder form {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 1rem;
+      align-items: center;
+      justify-content: space-between;
+    }
+    #kit-builder label {
+      flex: 1 1 45%;
+      font-weight: 600;
+      color: var(--dark);
+    }
+    #kit-builder select, #kit-builder input[type="checkbox"] {
+      margin-left: 0.5rem;
+    }
+    #kit-builder button {
+      margin-top: 1rem;
+      padding: 0.75rem 1.5rem;
+      font-weight: 700;
+      background: var(--primary);
+      color: white;
+      border: none;
+      border-radius: 50px;
+      cursor: pointer;
+      transition: background 0.3s;
+    }
+    #kit-builder button:hover {
+      background: #1e40af;
+    }
+    #kit-result {
+      margin-top: 1rem;
+      padding: 1rem;
+      background: var(--light);
+      border-radius: 20px;
+      min-height: 100px;
+      font-weight: 600;
+      color: var(--dark);
+    }
+    .quick-actions {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 2rem;
+      margin-bottom: 3rem;
+    }
+    .action-card {
+      background: rgba(255, 255, 255, 0.95);
+      backdrop-filter: blur(10px);
+      border-radius: 20px;
+      padding: 1.5rem 1rem;
+      box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+      text-align: center;
+      cursor: pointer;
+      transition: all 0.3s;
+    }
+    .action-card:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 15px 40px rgba(0, 0, 0, 0.15);
+    }
+    .action-icon {
+      font-size: 3rem;
+      margin-bottom: 1rem;
+      background: linear-gradient(135deg, var(--primary), var(--success));
+      width: 80px;
+      height: 80px;
+      border-radius: 50%;
+      color: white;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-left: auto;
+      margin-right: auto;
+    }
+    .action-card h3 {
+      margin-bottom: 0.5rem;
+      color: var(--dark);
+    }
+    .action-card p {
+      color: #64748b;
+      font-size: 0.9rem;
+      line-height: 1.4;
+    }
+    #alert-banner {
+      background: linear-gradient(135deg, var(--danger), var(--warning));
+      color: var(--light);
+      padding: 1rem;
+      text-align: center;
+      font-weight: bold;
+      border-radius: 15px;
+      margin-bottom: 2rem;
+      box-shadow: 0 10px 30px rgba(245, 158, 11, 0.3);
+      animation: slideIn 1s ease;
+    }
+    @keyframes slideIn {
+      from {
+        transform: translateX(-100%);
+        opacity: 0;
+      }
+      to {
+        transform: translateX(0);
+        opacity: 1;
+      }
+    }
+    @media (max-width: 768px) {
+      #kit-builder form label {
+        flex-basis: 100%;
+      }
+      .resource-grid, .quick-actions {
+        grid-template-columns: 1fr;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div id="back-btn-container">
+    <button id="back-btn" onclick="goBack()">&#8592; Back</button>
+  </div>
+  <div class="container">
+    <div id="alert-banner">
+      ⚠️ Next Campus-Wide Emergency Drill: Friday, October 15, 2025 at 10:00 AM
+    </div>
+    <section id="emergency-kit" class="resources">
+      <h2>Emergency Kit Checklist - Hilly Area Essentials</h2>
+      <div class="resource-grid">
+        <div class="resource-item">
+          <h4>Basic Supplies</h4>
+          <form id="basic-supplies-form">
+            <label><input type="checkbox" name="water" /> Water (1 gallon per person per day for 3 days)</label>
+            <label><input type="checkbox" name="food" /> Non-perishable food (3-day supply)</label>
+            <label><input type="checkbox" name="radio" /> Battery-powered or hand crank radio</label>
+            <label><input type="checkbox" name="flashlight" /> Flashlight & extra batteries</label>
+            <label><input type="checkbox" name="first-aid" /> Comprehensive first aid kit (include splints, gauze, blister treatment)</label>
+            <label><input type="checkbox" name="whistle" /> Whistle (to signal for help)</label>
+            <label><input type="checkbox" name="dust-mask" /> Dust mask</label>
+            <label><input type="checkbox" name="emergency-blanket" /> Emergency thermal blanket</label>
+            <label><input type="checkbox" name="multi-tool" /> Multi-tool or knife</label>
+          </form>
+        </div>
+        <div class="resource-item">
+          <h4>Medical & Personal Items</h4>
+          <form id="medical-items-form">
+            <label><input type="checkbox" name="medications" /> Prescription medications</label>
+            <label><input type="checkbox" name="non-prescription" /> Non-prescription meds (pain relievers, antacids)</label>
+            <label><input type="checkbox" name="glasses" /> Spare eyeglasses/contact lenses</label>
+            <label><input type="checkbox" name="hygiene" /> Feminine hygiene products/personal hygiene</label>
+            <label><input type="checkbox" name="bandages" /> Extra bandages and blister pads</label>
+            <label><input type="checkbox" name="insect-repellent" /> Insect repellent suitable for forests</label>
+            <label><input type="checkbox" name="sunblock" /> Sunscreen and lip balm with SPF</label>
+          </form>
+        </div>
+        <div class="resource-item">
+          <h4>Documents & Important Info</h4>
+          <form id="documents-form">
+            <label><input type="checkbox" name="ids" /> Copies of personal IDs</label>
+            <label><input type="checkbox" name="insurance" /> Insurance policies</label>
+            <label><input type="checkbox" name="contacts" /> Emergency contact list</label>
+            <label><input type="checkbox" name="cash" /> Cash or traveler's checks</label>
+            <label><input type="checkbox" name="maps" /> Local topographic maps</label>
+          </form>
+        </div>
+        <div class="resource-item">
+          <h4>Extras for Hilly Terrain</h4>
+          <form id="extras-form">
+            <label><input type="checkbox" name="sturdy-boots" /> Sturdy hiking boots or waterproof shoes</label>
+            <label><input type="checkbox" name="warm-clothing" /> Warm and lightweight clothing layers</label>
+            <label><input type="checkbox" name="hat-sunglasses" /> Wide-brimmed hat and UV-protective sunglasses</label>
+            <label><input type="checkbox" name="gloves" /> Gloves for warmth and protection</label>
+            <label><input type="checkbox" name="rope" /> Rope or paracord</label>
+            <label><input type="checkbox" name="firestarter" /> Waterproof matches or firestarter kit</label>
+            <label><input type="checkbox" name="compass" /> Compass and whistle</label>
+            <label><input type="checkbox" name="emergency-shelter" /> Lightweight emergency shelter or tarp</label>
+          </form>
+        </div>
+      </div>
+      <div style="text-align:center; margin-top: 1.5rem;">
+        <button class="emergency-btn" onclick="downloadChecklist()">Download Checklist</button>
+      </div>
+    </section>
+    <section id="kit-builder">
+      <h2>Build Your Personalized Emergency Kit</h2>
+      <form id="kit-builder-form">
+        <label>
+          Family Size:
+          <select id="family-size" name="familySize">
+            <option value="1">1 person</option>
+            <option value="2">2 persons</option>
+            <option value="3+">3 or more persons</option>
+          </select>
+        </label>
+        <label>
+          Pets to Prepare For:
+          <input type="checkbox" id="pet-dog" name="pets" value="dog" /> Dog
+          <input type="checkbox" id="pet-cat" name="pets" value="cat" /> Cat
+          <input type="checkbox" id="pet-other" name="pets" value="other" /> Other
+        </label>
+        <label>
+          Terrain Type:
+          <select id="terrain" name="terrain">
+            <option value="urban">Urban/City</option>
+            <option value="hilly">Hilly/Mountain</option>
+            <option value="coastal">Coastal</option>
+          </select>
+        </label>
+        <button type="button" onclick="generateKit()">Generate Kit</button>
+      </form>
+      <div id="kit-result"></div>
+    </section>
+    <section class="quick-actions">
+      <a class="action-card" href="evacuation.html" aria-labelledby="supplies-title-1" >
+        <div class="action-icon">🚪</div>
+        <h3>Evacuation Plans</h3>
+        <p>Access detailed evacuation routes and assembly points for your building.</p>
+      </a>
+      <a class="action-card" href="firstaid.html" aria-labelledby="firstaid-title-1">
+        <div class="action-icon">🏥</div>
+        <h3>First Aid Guide</h3>
+        <p>Learn essential first aid techniques for emergency situations.</p>
+      </a>
+      <div class="action-card" onclick="alert('Communication Plan Modal')">
+        <div class="action-icon">📢</div>
+        <h3>Communication Plan</h3>
+        <p>Create and update your emergency communication plan.</p>
+      </div>
+      <div class="action-card" onclick="alert('Emergency Contacts Modal')">
+        <div class="action-icon">☎️</div>
+        <h3>Emergency Contacts</h3>
+        <p>Store and easily access emergency contact information.</p>
+      </div>
+    </section>
+  </div>
+  <script>
+    function goBack() {
+      window.history.back();
+    }
+    function downloadChecklist() {
+      const forms = [
+        "basic-supplies-form",
+        "medical-items-form",
+        "documents-form",
+        "extras-form",
+      ];
+      let checklist = "Emergency Kit Checklist - Hilly Area Essentials\n\n";
+      forms.forEach((id) => {
+        const form = document.getElementById(id);
+        const sectionTitle = form.previousElementSibling.textContent;
+        checklist += sectionTitle + "\n";
+        Array.from(form.elements).forEach((input) => {
+          if (input.type === "checkbox") {
+            checklist += "[ ] " + input.parentElement.textContent.trim() + "\n";
+          }
+        });
+        checklist += "\n";
+      });
+      const blob = new Blob([checklist], { type: "text/plain" });
+      const url = URL.createObjectURL(blob);
+      const link = document.createElement("a");
+      link.href = url;
+      link.download = "Emergency_Kit_Checklist_Hilly_Areas.txt";
+      document.body.appendChild(link);
+      link.click();
+      document.body.removeChild(link);
+      URL.revokeObjectURL(url);
+    }
+    function generateKit() {
+      const familySize = document.getElementById("family-size").value;
+      const pets = [
+        ...document.querySelectorAll('input[name="pets"]:checked'),
+      ].map((el) => el.value);
+      const terrain = document.getElementById("terrain").value;
+      let kitItems = [];
+      kitItems.push("Water - 1 gallon per person per day (3 days min)");
+      kitItems.push("Non-perishable Food - 3 days supply");
+      kitItems.push("First Aid Kit");
+      kitItems.push("Flashlight & Extra Batteries");
+      if (familySize === "3+") {
+        kitItems.push("Extra clothing and blankets");
+      }
+      if (pets.length > 0) {
+        kitItems.push("Pet food & supplies for " + pets.join(", "));
+      }
+      if (terrain === "hilly") {
+        kitItems.push("Sturdy boots and warm clothing");
+        kitItems.push("Rope or paracord");
+        kitItems.push("Emergency shelter or tarp");
+      } else if (terrain === "coastal") {
+        kitItems.push("Waterproof bags and gear");
+        kitItems.push("Life jackets");
+      } else if (terrain === "urban") {
+        kitItems.push("Dust masks and gloves");
+      }
+      const listHTML =
+        "<ul>" + kitItems.map((item) => "<li>" + item + "</li>").join("") + "</ul>";
+      document.getElementById("kit-result").innerHTML =
+        "<h3>Your Customized Kit:</h3>" + listHTML;
+    }
+  </script>
+</body>
+</html>

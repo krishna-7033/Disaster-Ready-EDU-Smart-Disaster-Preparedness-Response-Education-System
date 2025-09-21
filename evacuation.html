@@ -1,0 +1,236 @@
+<!-- 🚨 Trigger button -->
+<button class="evac-btn" onclick="showEvacuationPlan()">🚨 View Evacuation Plan</button>
+
+<!-- 📌 Modal -->
+<div id="evacuationModal" class="modal">
+  <div class="modal-content alert-glow">
+    <span class="close" onclick="closeEvacuationPlan()">&times;</span>
+    
+    <div class="modal-header">
+      <!-- 🚨 Centered Alert Emoji -->
+      <div class="alert-emoji">🚨</div>
+      <h2>EMERGENCY ALERT – Evacuation Plan</h2>
+      <p>⚠️ Please stay calm and follow the marked exit routes immediately.</p>
+    </div>
+
+    <!-- Evacuation Plan Map -->
+    <div class="map-container">
+      <img src="evacuation-map.png" 
+           alt="Evacuation Plan" 
+           class="evac-map" />
+    </div>
+
+    <!-- Key Instructions -->
+    <div class="instructions">
+      <h3>🔑 Safety Guidelines</h3>
+      <ul>
+        <li>✅ Use <span class="highlight-green">green exit routes</span> quickly.</li>
+        <li>✅ Assemble at the <span class="highlight-blue">blue-marked safe zone</span>.</li>
+        <li>❌ Do not use elevators.</li>
+        <li>✅ Assist elderly, children, and differently-abled persons.</li>
+      </ul>
+    </div>
+
+    <!-- Footer CTA -->
+    <div class="btn-container">
+      <button class="primary-btn" onclick="closeEvacuationPlan()">Dismiss Alert</button>
+    </div>
+  </div>
+</div>
+
+<!-- 🎶 Vibration/Buzzing Sound -->
+<audio id="buzzSound" loop>
+  <source src="assets/sounds/buzz.mp3" type="audio/mpeg">
+  <source src="assets/sounds/buzz.ogg" type="audio/ogg">
+  Your browser does not support the audio element.
+</audio>
+
+<style>
+  body {
+    font-family: "Segoe UI", Roboto, sans-serif;
+    background: #121212;
+    color: #e0e0e0;
+  }
+
+  /* Button */
+  .evac-btn {
+    background: linear-gradient(135deg, #e63946, #b5179e);
+    color: #fff;
+    padding: 14px 26px;
+    border: none;
+    border-radius: 14px;
+    cursor: pointer;
+    font-size: 16px;
+    font-weight: 600;
+    box-shadow: 0 6px 18px rgba(0,0,0,0.4);
+    transition: 0.3s;
+  }
+  .evac-btn:hover {
+    transform: scale(1.05);
+    background: linear-gradient(135deg, #d62828, #a4168c);
+  }
+
+  /* Modal background */
+  .modal {
+    display: none; 
+    position: fixed;
+    z-index: 2000;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(18,18,18,0.92);
+    backdrop-filter: blur(6px);
+    animation: fadeIn 0.3s ease-in-out;
+  }
+  @keyframes fadeIn {
+    from {opacity: 0;}
+    to {opacity: 1;}
+  }
+
+  /* Modal card */
+  .modal-content {
+    background: #1e1e1e;
+    margin: 4% auto;
+    padding: 30px;
+    border-radius: 18px;
+    width: 70%;
+    max-width: 900px;
+    color: #eee;
+    box-shadow: 0 12px 32px rgba(0,0,0,0.6);
+    animation: slideUp 0.4s ease;
+    position: relative;
+  }
+  @keyframes slideUp {
+    from {transform: translateY(60px); opacity: 0;}
+    to {transform: translateY(0); opacity: 1;}
+  }
+
+  /* 🚨 Blinking Alert Glow */
+  .alert-glow {
+    border: 3px solid #ff0000;
+    box-shadow: 0 0 20px #ff0000;
+    animation: blinkGlow 1s infinite;
+  }
+  @keyframes blinkGlow {
+    0%, 100% { box-shadow: 0 0 25px #ff0000; border-color: #ff0000; }
+    50% { box-shadow: 0 0 10px #660000; border-color: #660000; }
+  }
+
+  /* 🚨 Alert Emoji Styling */
+  .alert-emoji {
+    font-size: 64px;
+    text-align: center;
+    margin-bottom: 12px;
+    animation: pulse 1s infinite;
+  }
+  @keyframes pulse {
+    0%, 100% { transform: scale(1); }
+    50% { transform: scale(1.3); }
+  }
+
+  /* Close button */
+  .close {
+    float: right;
+    font-size: 30px;
+    font-weight: bold;
+    color: #aaa;
+    cursor: pointer;
+  }
+  .close:hover {
+    color: #ff4d6d;
+  }
+
+  /* Header */
+  .modal-header h2 {
+    margin: 0;
+    color: #ff4d6d;
+    font-weight: 700;
+    text-transform: uppercase;
+    text-align: center;
+  }
+  .modal-header p {
+    color: #bbb;
+    margin: 8px 0 20px;
+    font-size: 15px;
+    text-align: center;
+  }
+
+  /* Map */
+  .map-container {
+    text-align: center;
+    margin: 15px 0;
+  }
+  .evac-map {
+    max-width: 100%;
+    height: auto;
+    border-radius: 14px;
+    box-shadow: 0 8px 22px rgba(0,0,0,0.5);
+    border: 2px solid #333;
+  }
+
+  /* Instructions */
+  .instructions {
+    background: #252525;
+    padding: 18px 20px;
+    margin-top: 22px;
+    border-radius: 14px;
+    border-left: 6px solid #ff4d6d;
+  }
+  .instructions h3 {
+    margin-top: 0;
+    color: #f72585;
+  }
+  .instructions ul {
+    padding-left: 22px;
+    margin: 12px 0;
+    color: #ddd;
+    line-height: 1.6;
+  }
+  .highlight-green { color: #06d6a0; font-weight: 600; }
+  .highlight-blue { color: #4cc9f0; font-weight: 600; }
+
+  /* Footer button */
+  .btn-container {
+    text-align: right;
+    margin-top: 25px;
+  }
+  .primary-btn {
+    background: linear-gradient(135deg, #ff0000, #b51717);
+    color: #fff;
+    padding: 12px 24px;
+    border: none;
+    border-radius: 12px;
+    cursor: pointer;
+    font-size: 15px;
+    font-weight: 600;
+    transition: 0.3s;
+  }
+  .primary-btn:hover {
+    background: linear-gradient(135deg, #cc0000, #7a0f0f);
+  }
+</style>
+
+<script>
+function showEvacuationPlan() {
+  document.getElementById("evacuationModal").style.display = "block";
+  let buzz = document.getElementById("buzzSound");
+  buzz.volume = 1.0; // Loud
+  buzz.play().catch(err => console.log("Autoplay blocked:", err));
+
+  // ✅ Trigger vibration if supported (mobile/tablets)
+  if (navigator.vibrate) {
+    navigator.vibrate([500, 300, 500, 300, 1000]); 
+  }
+}
+function closeEvacuationPlan() {
+  document.getElementById("evacuationModal").style.display = "none";
+  let buzz = document.getElementById("buzzSound");
+  buzz.pause();
+  buzz.currentTime = 0; // reset
+
+  if (navigator.vibrate) {
+    navigator.vibrate(0); // stop vibration
+  }
+}
+</script>
